@@ -68,3 +68,7 @@ sync
 echo 0 > /sys/class/gpio/gpio23/value
 echo 0 > /sys/class/gpio/gpio45/value
 rm -rf /config/*
+while true
+do
+	sleep 1s
+done

@@ -70,7 +70,7 @@ else
 	echo "gateway=${ant_conf_gateway}"				>> /config/network.conf
 	echo "dnsservers=\"${ant_conf_dnsservers}"\"	>> /config/network.conf
 fi
-
+sync
 /etc/init.d/network.sh
 /etc/init.d/avahi restart > /dev/null
 

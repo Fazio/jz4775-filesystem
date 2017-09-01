@@ -223,6 +223,7 @@ jQuery(document).ready(function() {
 							<label class="cbi-value-title" for="cbid.cgminer.default.freq">Frequency</label>
 							<div class="cbi-value-field">
 								<select id="ant_freq" class="cbi-input-text">
+  <option value="0"> Default setting </option>
   <option value="100"> 100M </option>
   <option value="106"> 106M </option>
   <option value="112"> 112M </option>

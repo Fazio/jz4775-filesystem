@@ -16,6 +16,8 @@ do_install_append() {
         cp -pr ${WORKDIR}/www-ltc/* ${D}/www/pages
     elif [ x"L3+" == x"${Miner_TYPE}" ]; then
         cp -pr ${WORKDIR}/www-ltc-p/* ${D}/www/pages
+    elif [ x"D3" == x"${Miner_TYPE}" ]; then
+        cp -pr ${WORKDIR}/www-dash/* ${D}/www/pages
     else
         cp -pr ${WORKDIR}/www/* ${D}/www/pages
     fi
@@ -45,3 +47,4 @@ SRC_URI_append = " file://www"
 SRC_URI_append = " file://www_miner"
 SRC_URI_append = " file://www-ltc"
 SRC_URI_append = " file://www-ltc-p"
+SRC_URI_append = " file://www-dash"

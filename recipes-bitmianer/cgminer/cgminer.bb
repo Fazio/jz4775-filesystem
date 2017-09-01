@@ -11,17 +11,17 @@ DEPENDS = "ncurses curl"
 SRCREV = "3.8.5"
 #PV = "${SRCREV}+${SRCPV}"
 PR = "r1"
-
-SRC_URI = "file://cgminer-ltc.tar.bz2"
-S = "${WORKDIR}/cgminer-ltc"
-
+SRC_URI = "file://cgminer-dash.tar.bz2"
+#SRC_URI = "file://cgminer-ltc.tar.bz2"
+S = "${WORKDIR}/cgminer-dash"
+#S = "${WORKDIR}/cgminer-ltc"
 
 #CFLAGS_prepend = "-I ${S}/compat/jansson-2.5/src -I ${S}/compat/libusb-1.0/libusb"
 CFLAGS_prepend = "-I ${S}/compat/jansson-2.6/src -I ${S}/compat/libusb-1.0/libusb"
 
 
 EXTRA_OECONF = " \
-	     --enable-bitmain-L3 \
+	     --enable-bitmain-D1 \
 	     --disable-adl \
 	     --disable-opencl \
 	     --disable-libcurl \

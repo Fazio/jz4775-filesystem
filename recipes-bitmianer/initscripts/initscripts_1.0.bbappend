@@ -14,11 +14,19 @@ do_install_append() {
 
 	install -m 0755 ${WORKDIR}/ntpdate.sh ${D}${sysconfdir}/init.d
 	update-rc.d -r ${D} ntpdate.sh start 39 S .
-
-	install -m 0755 ${WORKDIR}/cgminer.sh ${D}${sysconfdir}/init.d
-	update-rc.d -r ${D} cgminer.sh start 70 S .
-
+	if [ x"L3" == x"${Miner_TYPE}" ]; then
+		install -m 0755 ${WORKDIR}/cgminer.sh.ltc ${D}${sysconfdir}/init.d/cgminer.sh
+	elif [ x"L3+" == x"${Miner_TYPE}" ]; then
+		install -m 0755 ${WORKDIR}/cgminer.sh.ltc ${D}${sysconfdir}/init.d/cgminer.sh
+	elif [ x"D3" == x"${Miner_TYPE}" ]; then
+		install -m 0755 ${WORKDIR}/cgminer.sh.dash ${D}${sysconfdir}/init.d/cgminer.sh
+	fi
 	install -m 0755 ${WORKDIR}/pgnand.sh ${D}${sysconfdir}/init.d
+	if [ x"SD" == x"${BOOT_MODE}" ];then
+		update-rc.d -r ${D} pgnand.sh start 70 S .
+	else
+		update-rc.d -r ${D} cgminer.sh start 70 S .
+	fi
 	
 	cd ${D}${sysconfdir}/rcS.d
 	ln -s ../init.d/ntpd S40ntpd
@@ -56,6 +64,10 @@ do_install_append() {
 		install -m 0400 ${WORKDIR}/pic.txt ${D}${base_sbindir}/
 		install -m 0400 ${WORKDIR}/network.conf.factory ${D}${sysconfdir}/network.conf.factory
 		install -m 0400 ${WORKDIR}/cgminer_l3.conf.factory ${D}${sysconfdir}/cgminer.conf.factory
+	elif [ x"D3" == x"${Miner_TYPE}" ]; then
+		install -m 0400 ${WORKDIR}/pic.txt ${D}${base_sbindir}/
+		install -m 0400 ${WORKDIR}/network.conf.factory ${D}${sysconfdir}/network.conf.factory
+		install -m 0400 ${WORKDIR}/cgminer_d1.conf.factory ${D}${sysconfdir}/cgminer.conf.factory
 	else	
 		echo "AntMiner ${Miner_TYPE}" > ${WORKDIR}/user_defined_lcd.factory
 		install -m 0400 ${WORKDIR}/network.conf.factory ${D}${sysconfdir}/network.conf.factory
@@ -70,15 +82,18 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/miner_lcd.sh ${D}${base_sbindir}/minerlcd
 	install -d ${D}${bindir}
 	rm -rf ${D}${bindir}/compile_time
-        echo "Thu May 11 10:42:49 CST 2017" > ${D}${bindir}/compile_time
-        echo "Antminer L3+" >> ${D}${bindir}/compile_time
+
+        echo "Thu Aug 31 13:38:33 CST 2017" > ${D}${bindir}/compile_time
+        echo "Antminer D3" >> ${D}${bindir}/compile_time
+
 }
 
 SRC_URI_append = " file://mountdevtmpfs.sh"
 SRC_URI_append = " file://network.sh"
 SRC_URI_append = " file://network.conf.factory"
 SRC_URI_append = " file://network_c1.conf.factory"
-SRC_URI_append = " file://cgminer.sh"
+SRC_URI_append = " file://cgminer.sh.ltc"
+SRC_URI_append = " file://cgminer.sh.dash"
 SRC_URI_append = " file://cgminer.conf.factory"
 SRC_URI_append = " file://cgminer_c1.conf.factory"
 SRC_URI_append = " file://cgminer_c2.conf.factory"
@@ -86,6 +101,7 @@ SRC_URI_append = " file://cgminer_s4p.conf.factory"
 SRC_URI_append = " file://cgminer_s5.conf.factory"
 SRC_URI_append = " file://cgminer_s5p.conf.factory"
 SRC_URI_append = " file://cgminer_l3.conf.factory"
+SRC_URI_append = " file://cgminer_d1.conf.factory"
 SRC_URI_append = " file://cgminer_s2.conf.factory"
 SRC_URI_append = " file://user_setting.factory"
 SRC_URI_append = " file://user_defined_lcd.factory"
