@@ -8,7 +8,7 @@ PR = "r1"
 SRC_URI = "git://git@gitlab.bitmain.com/antminer/cgminer-dash.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
-CFLAGS_prepend = "-g -I ${S}/compat/jansson-2.6/src -I ${S}/compat/libusb-1.0/libusb"
+CFLAGS_prepend = "-g -I ${B} -I ${B}/compat/jansson-2.6/src -I ${B}/compat/libusb-1.0/libusb -I ${S} -I ${S}/compat/jansson-2.6/src -I ${S}/compat/libusb-1.0/libusb"
 #CFLAGS = "-ggdb -pipe -feliminate-unused-debug-types -I ${S}/compat/jansson-2.6/src -I ${S}/compat/libusb-1.0/libusb"
 
 EXTRA_OECONF = " \
@@ -17,19 +17,21 @@ EXTRA_OECONF = " \
 	     --disable-opencl \
 	     --disable-libcurl \
 	     "
-		 
+
+INHIBIT_PACKAGE_STRIP = "1"		 
 do_configure_prepend() {
 	echo ${BUILD_DATE} > ./build_date
-	autoreconf -fiv
+
 }
 
 do_compile_append() {
-	make api-example
+	cp ${S}/api-example.c ${B}
+	${CC} ${CFLAGS} ${B}/api-example.c -o ${B}/api-example
 }
 
 do_install_append() {
         install -d ${D}${bindir}
-        install -m 0755 ${S}/api-example ${D}${bindir}/cgminer-api
+        install -m 0755 ${B}/api-example ${D}${bindir}/cgminer-api
 }
  
 inherit autotools pkgconfig

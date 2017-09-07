@@ -83,7 +83,7 @@ do_install_append() {
 	install -d ${D}${bindir}
 	rm -rf ${D}${bindir}/compile_time
 
-        echo "Thu Aug 31 13:38:33 CST 2017" > ${D}${bindir}/compile_time
+        echo "Wed Sep  6 13:36:32 HKT 2017" > ${D}${bindir}/compile_time
         echo "Antminer D3" >> ${D}${bindir}/compile_time
 
 }

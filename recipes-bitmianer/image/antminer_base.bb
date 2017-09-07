@@ -7,7 +7,6 @@ IMAGE_INSTALL = " \
 	sysvinit \
 	sysvinit-pidof \
 	angstrom-version \
-	tinylogin \
 	i2c-tools \
 	screen \
 	dropbear \
@@ -25,14 +24,8 @@ IMAGE_INSTALL = " \
 	avahi \
 	led-blink \
 "
-#omap3-mkcard 			   
-#cgminer 
-
 inherit image
+inherit core-image
+inherit image_types_uboot
 
-do_rootfs_append() {
-	echo "do_build_append"
-	#cp -rf /home/xxl/AM335x/knc/setup-s3/deploy/eglibc/images/beaglebone/Angstrom-S3-eglibc-ipk-v2013.06-beaglebone.rootfs.cpio.gz.u-boot /tftpboot/initramfs.bin
-	#cp -rf /home/xxl/AM335x/knc/setup-s3/deploy/eglibc/images/beaglebone/Angstrom-S3-eglibc-ipk-v2013.06-beaglebone.rootfs.cpio.gz.u-boot /tftpboot/initramfs.bin.SD
-}
 
